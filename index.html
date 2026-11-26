@@ -65,48 +65,48 @@
 <body class="bg-obsidian text-white antialiased selection:bg-lavender/30 selection:text-white">
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm pointer-events-none"></div>
 
-    <!-- API KEY & SETTINGS MODAL -->
+    <!-- OPTIONAL ENGINE SETTINGS MODAL -->
     <div id="api-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden transition-opacity duration-300">
         <div class="cyber-glass-strong rounded-2xl border border-lavender/50 max-w-lg w-full p-6 sm:p-7 shadow-[0_0_50px_rgba(168,85,247,0.3)] relative">
             <button onclick="toggleApiModal(false)" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             <div class="flex items-center gap-3 mb-4">
-                <div class="w-10 h-10 rounded-xl bg-purple-500/20 border border-lavender/40 flex items-center justify-center text-lavender">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-400/40 flex items-center justify-center text-emerald-300">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 </div>
                 <div>
-                    <h3 class="font-display text-lg font-bold uppercase tracking-wider text-white">Gemini API Key Setup</h3>
-                    <p class="text-[11px] font-tech text-lavender tracking-wider uppercase">Secure In-Browser Storage • Zero GitHub Leaks</p>
+                    <h3 class="font-display text-lg font-bold uppercase tracking-wider text-white">Studio Engine Settings</h3>
+                    <p class="text-[11px] font-tech text-emerald-300 tracking-wider uppercase">Built-In Gemini 3.8 Flash TTS • No API Key Required</p>
                 </div>
             </div>
-            <p class="text-xs text-white/70 leading-relaxed mb-4">
-                Your Gemini API key is <strong class="text-white">never hardcoded in GitHub code</strong>. It is saved only in your local browser (<code class="bg-white/10 px-1 py-0.5 rounded text-lavender text-[11px]">localStorage</code>).
-            </p>
+            <div id="modal-server-banner" class="rounded-xl bg-emerald-500/10 border border-emerald-400/30 p-3.5 mb-5 text-xs text-white/80 leading-relaxed">
+                <strong class="text-emerald-300">Built-in Studio Engine active:</strong> Visitors can generate voices right away with <strong class="text-white">Gemini 3.8 Flash TTS</strong> — no API key setup needed. The fields below are strictly optional for custom servers or personal keys.
+            </div>
             <div class="space-y-4 mb-6">
                 <div>
                     <div class="flex items-center justify-between mb-1.5">
-                        <label for="modal-api-key" class="text-[11px] font-tech tracking-wider uppercase text-white/75">Google Gemini API Key</label>
-                        <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-[11px] font-tech text-lavender hover:underline flex items-center gap-1">Get free key <span>↗</span></a>
+                        <label for="modal-proxy-url" class="text-[11px] font-tech tracking-wider uppercase text-white/75">Voice Server Endpoint (Optional)</label>
+                        <span class="text-[10px] font-tech text-white/40 uppercase">Default: /api/generate-voice</span>
                     </div>
-                    <div class="relative">
-                        <input type="password" id="modal-api-key" placeholder="AIzaSy..." class="w-full bg-black/70 border border-white/20 focus:border-lavender rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none font-mono tracking-wider transition-colors" />
-                        <button type="button" onclick="toggleKeyVisibility(event)" class="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white text-xs font-tech uppercase px-2 py-1">Show</button>
-                    </div>
+                    <input type="url" id="modal-proxy-url" placeholder="/api/generate-voice (built-in)" class="w-full bg-black/70 border border-white/15 focus:border-lavender rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/30 outline-none font-mono transition-colors" />
                 </div>
                 <div class="pt-2 border-t border-white/10">
                     <div class="flex items-center justify-between mb-1.5">
-                        <label for="modal-proxy-url" class="text-[11px] font-tech tracking-wider uppercase text-white/60">Optional Backend Proxy Endpoint</label>
-                        <span class="text-[10px] font-tech text-white/40 uppercase">For Server Deployments</span>
+                        <label for="modal-api-key" class="text-[11px] font-tech tracking-wider uppercase text-white/60">Personal Gemini API Key (Optional Override)</label>
+                        <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-[11px] font-tech text-lavender hover:underline flex items-center gap-1">Google AI Studio <span>↗</span></a>
                     </div>
-                    <input type="url" id="modal-proxy-url" placeholder="e.g. /api/tts or https://my-worker.workers.dev/tts" class="w-full bg-black/70 border border-white/15 focus:border-lavender rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/25 outline-none font-mono transition-colors" />
+                    <div class="relative">
+                        <input type="password" id="modal-api-key" placeholder="Leave blank to use built-in free studio server" class="w-full bg-black/70 border border-white/15 focus:border-lavender rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/30 outline-none font-mono tracking-wider transition-colors" />
+                        <button type="button" onclick="toggleKeyVisibility(event)" class="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white text-xs font-tech uppercase px-2 py-1">Show</button>
+                    </div>
                 </div>
             </div>
             <div class="flex items-center justify-between gap-3 pt-3 border-t border-white/10">
-                <button type="button" onclick="clearApiKey()" class="px-4 py-2.5 rounded-xl border border-rose-500/30 hover:bg-rose-500/10 text-xs font-tech tracking-wider uppercase text-rose-300 transition-all">Remove Key</button>
+                <button type="button" onclick="clearApiKey()" class="px-4 py-2.5 rounded-xl border border-white/15 hover:bg-white/10 text-xs font-tech tracking-wider uppercase text-white/70 transition-all">Use Built-In Default</button>
                 <div class="flex items-center gap-2">
-                    <button type="button" onclick="toggleApiModal(false)" class="px-4 py-2.5 rounded-xl border border-white/15 hover:bg-white/10 text-xs font-tech tracking-wider uppercase text-white/70 transition-all">Cancel</button>
-                    <button type="button" onclick="saveApiKeyModal()" class="btn-chrome px-6 py-2.5 rounded-xl text-xs font-display font-bold tracking-wider uppercase">Save & Connect</button>
+                    <button type="button" onclick="toggleApiModal(false)" class="px-4 py-2.5 rounded-xl border border-white/15 hover:bg-white/10 text-xs font-tech tracking-wider uppercase text-white/70 transition-all">Close</button>
+                    <button type="button" onclick="saveApiKeyModal()" class="btn-chrome px-6 py-2.5 rounded-xl text-xs font-display font-bold tracking-wider uppercase">Save Settings</button>
                 </div>
             </div>
         </div>
@@ -174,9 +174,9 @@
             </nav>
 
             <div class="flex items-center gap-2.5 sm:gap-3.5">
-                <button id="nav-api-btn" onclick="toggleApiModal(true)" class="cyber-glass hover:border-lavender/80 px-3 py-1.5 rounded-lg text-[10px] font-tech tracking-[0.14em] uppercase text-white/90 hover:text-white transition-all flex items-center gap-1.5">
-                    <span id="api-status-dot" class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                    <span id="api-status-label">Connect API</span>
+                <button id="nav-api-btn" onclick="toggleApiModal(true)" title="Studio Engine Settings" class="cyber-glass hover:border-lavender/80 px-3 py-1.5 rounded-lg text-[10px] font-tech tracking-[0.14em] uppercase text-white/90 hover:text-white transition-all flex items-center gap-1.5">
+                    <span id="api-status-dot" class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
+                    <span id="api-status-label">3.8 Flash Free</span>
                 </button>
                 <input type="file" id="bg-art-input" accept="image/*" class="hidden" />
                 <button id="bg-art-upload-btn" onclick="document.getElementById('bg-art-input').click()" title="Load background image" class="cyber-glass hover:border-lavender/70 px-2.5 py-1.5 rounded-lg text-[10px] font-tech tracking-[0.14em] uppercase text-white/70 hover:text-white transition-all hidden sm:flex items-center gap-1.5">
@@ -293,13 +293,13 @@
         <div class="relative z-10 max-w-[1320px] mx-auto">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
                 <div>
-                    <div class="text-[11px] font-tech tracking-[0.24em] uppercase text-lavender mb-2 flex items-center gap-2"><span>✦</span> GEMINI NEURAL VOICE SYNTHESIS ENGINE</div>
+                    <div class="text-[11px] font-tech tracking-[0.24em] uppercase text-lavender mb-2 flex items-center gap-2"><span>✦</span> GEMINI 3.8 FLASH TTS • ZERO API KEY REQUIRED</div>
                     <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight">VOICEOVER <span class="lavender-text">STUDIO</span></h2>
                 </div>
                 <div class="flex flex-wrap items-center gap-3 self-start md:self-auto">
-                    <button onclick="toggleApiModal(true)" class="cyber-glass hover:border-lavender rounded-xl px-4 py-2.5 text-xs font-tech tracking-[0.12em] uppercase text-white/80 hover:text-white flex items-center gap-2 transition-all">
-                        <span id="studio-api-dot" class="w-2 h-2 rounded-full bg-amber-400"></span>
-                        <span id="studio-api-text">API Setup</span>
+                    <button onclick="toggleApiModal(true)" title="Optional Engine Settings" class="cyber-glass hover:border-lavender rounded-xl px-4 py-2.5 text-xs font-tech tracking-[0.12em] uppercase text-white/80 hover:text-white flex items-center gap-2 transition-all">
+                        <span id="studio-api-dot" class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
+                        <span id="studio-api-text">Engine: Built-In Free</span>
                     </button>
                     <div class="inline-flex cyber-glass rounded-xl p-1.5">
                         <button id="mode-single-btn" onclick="switchStudioMode('single')" class="px-5 py-2.5 rounded-lg text-xs font-tech tracking-[0.14em] uppercase transition-all bg-white text-obsidian font-semibold">Single Voiceover</button>
@@ -362,17 +362,26 @@
                             </div>
                         </div>
                         <div class="relative">
-                            <textarea id="voice-script" rows="6" maxlength="2000" placeholder="Type or paste your script here... ZEDCraft Studio will synthesize lifelike neural audio with Gemini TTS." class="w-full bg-black/50 border border-white/12 focus:border-lavender/70 rounded-xl p-4 sm:p-5 text-sm sm:text-base text-white placeholder-white/30 outline-none resize-y leading-relaxed transition-colors">Welcome to ZEDCraft Studio. Where neural synthesis meets human emotion. Type any script, choose your signature voice, and craft cinema-grade voiceovers beyond reality.</textarea>
-                            <div class="flex items-center justify-between mt-2.5 text-[11px] font-tech text-white/45">
-                                <span id="dialogue-hint" class="hidden text-lavender">Use "Alex:" and "Maya:" prefixes for multi-speaker dialogue.</span>
-                                <span id="single-hint">Tip: Use punctuation and ellipses (...) for natural dramatic pauses.</span>
-                                <span><span id="char-count">167</span> / 2000</span>
+                            <textarea id="voice-script" rows="6" maxlength="5000" placeholder="Type or paste your script here... ZEDCraft Studio synthesizes lifelike neural audio with Gemini 3.8 Flash TTS." class="w-full bg-black/50 border border-white/12 focus:border-lavender/70 rounded-xl p-4 sm:p-5 text-sm sm:text-base text-white placeholder-white/30 outline-none resize-y leading-relaxed transition-colors">Welcome to ZEDCraft Studio. Where neural synthesis meets human emotion. Type any script, choose your signature voice, and craft cinema-grade voiceovers beyond reality.</textarea>
+                            <div class="flex flex-wrap items-center gap-1.5 mt-2.5">
+                                <span class="text-[10px] font-tech tracking-wider uppercase text-white/45 mr-1">3.8 Vocal Tags:</span>
+                                <button type="button" onclick="insertVocalTag('<laugh>')" class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-white/5 hover:bg-purple-500/25 border border-white/10 hover:border-lavender/50 text-lavender/90 transition-all">&lt;laugh&gt;</button>
+                                <button type="button" onclick="insertVocalTag('<sigh>')" class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-white/5 hover:bg-purple-500/25 border border-white/10 hover:border-lavender/50 text-lavender/90 transition-all">&lt;sigh&gt;</button>
+                                <button type="button" onclick="insertVocalTag('<gasp>')" class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-white/5 hover:bg-purple-500/25 border border-white/10 hover:border-lavender/50 text-lavender/90 transition-all">&lt;gasp&gt;</button>
+                                <button type="button" onclick="insertVocalTag('<short pause>')" class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-white/5 hover:bg-purple-500/25 border border-white/10 hover:border-lavender/50 text-lavender/90 transition-all">&lt;short pause&gt;</button>
+                                <button type="button" onclick="insertVocalTag('<long pause>')" class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-white/5 hover:bg-purple-500/25 border border-white/10 hover:border-lavender/50 text-lavender/90 transition-all">&lt;long pause&gt;</button>
+                                <button type="button" onclick="insertVocalTag('<cough>')" class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-white/5 hover:bg-purple-500/25 border border-white/10 hover:border-lavender/50 text-lavender/90 transition-all">&lt;cough&gt;</button>
+                            </div>
+                            <div class="flex items-center justify-between mt-2 text-[11px] font-tech text-white/45">
+                                <span id="dialogue-hint" class="hidden text-lavender">Use "Alex:" and "Maya:" prefixes — Gemini 3.8 automatically routes each turn.</span>
+                                <span id="single-hint">Tip: Click any vocal tag above or use ellipses (...) for natural acting pauses.</span>
+                                <span><span id="char-count">167</span> / 5000</span>
                             </div>
                         </div>
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-2 border-t border-white/10">
                             <div class="flex items-center gap-3 text-xs text-white/60">
                                 <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
-                                <span>Engine: <strong class="text-white font-medium">Gemini 2.5 Flash TTS</strong></span>
+                                <span>Engine: <strong id="active-engine-label" class="text-white font-medium">Gemini 3.8 Flash TTS</strong></span>
                                 <span class="text-white/25">|</span>
                                 <span>24kHz WAV</span>
                             </div>
@@ -434,7 +443,14 @@
                     <div class="cyber-glass-strong rounded-2xl p-5 sm:p-6 flex flex-col gap-5">
                         <div class="flex items-center justify-between">
                             <span class="text-[11px] font-tech tracking-[0.2em] uppercase text-lavender">VOICE CONFIGURATION</span>
-                            <span class="text-[10px] font-tech text-white/45 uppercase">Gemini Models</span>
+                            <span class="text-[10px] font-tech text-emerald-300/80 uppercase">Gemini 3.8 TTS</span>
+                        </div>
+                        <div>
+                            <label for="model-select" class="block text-[11px] font-tech tracking-[0.15em] uppercase text-white/60 mb-1.5">Synthesis Model</label>
+                            <select id="model-select" onchange="updateEngineLabel()" class="w-full bg-black/70 border border-white/15 focus:border-lavender rounded-xl px-4 py-2.5 text-xs text-white outline-none">
+                                <option value="gemini-3.8-flash-tts" selected>Gemini 3.8 Flash TTS — Studio Acting & Fidelity</option>
+                                <option value="gemini-3.8-flash-lite-tts">Gemini 3.8 Flash-Lite TTS — Ultra-Fast Generation</option>
+                            </select>
                         </div>
                         <div id="single-voice-controls" class="flex flex-col gap-4">
                             <div>
@@ -733,26 +749,73 @@
             animateSpringJiggle();
         }
 
+        const DEFAULT_VOICE_ENDPOINT = '/api/generate-voice';
         const STORAGE_KEY = 'zedcraft_gemini_api_key';
         const STORAGE_PROXY_KEY = 'zedcraft_proxy_url';
+        let builtInServerState = 'checking'; // 'ready' | 'unconfigured' | 'unavailable' | 'checking'
 
         function getStoredApiKey() { return localStorage.getItem(STORAGE_KEY) || sessionStorage.getItem(STORAGE_KEY) || ''; }
         function getStoredProxyUrl() { return localStorage.getItem(STORAGE_PROXY_KEY) || ''; }
 
         function updateApiStatusUI() {
-            const isConfigured = !!(getStoredApiKey() || getStoredProxyUrl());
+            const customKey = getStoredApiKey();
+            const customProxy = getStoredProxyUrl();
             const navDot = document.getElementById('api-status-dot');
             const navLabel = document.getElementById('api-status-label');
             const studioDot = document.getElementById('studio-api-dot');
             const studioText = document.getElementById('studio-api-text');
-            if (navDot && navLabel) {
-                navDot.className = isConfigured ? 'w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]' : 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
-                navLabel.textContent = isConfigured ? 'API Ready' : 'Connect API';
+            const banner = document.getElementById('modal-server-banner');
+
+            let dotClass = 'w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]';
+            let navText = '3.8 Flash Free';
+            let studioLabel = 'Engine: Built-In Free';
+
+            if (customKey) {
+                navText = '3.8 Personal Key';
+                studioLabel = 'Engine: Personal Key';
+            } else if (customProxy) {
+                navText = '3.8 Custom Server';
+                studioLabel = 'Engine: Custom Server';
+            } else if (builtInServerState === 'unconfigured') {
+                dotClass = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
+                navText = 'Server Key Needed';
+                studioLabel = 'Add Key on Netlify';
+            } else if (builtInServerState === 'unavailable') {
+                dotClass = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
+                navText = 'Static Mode';
+                studioLabel = 'Connect Voice Server';
             }
-            if (studioDot && studioText) {
-                studioDot.className = isConfigured ? 'w-2 h-2 rounded-full bg-emerald-400' : 'w-2 h-2 rounded-full bg-amber-400';
-                studioText.textContent = isConfigured ? 'API Ready ✓' : 'API Setup';
+
+            if (navDot && navLabel) { navDot.className = dotClass; navLabel.textContent = navText; }
+            if (studioDot && studioText) { studioDot.className = dotClass; studioText.textContent = studioLabel; }
+
+            if (banner) {
+                if (builtInServerState === 'unconfigured' && !customKey && !customProxy) {
+                    banner.className = 'rounded-xl bg-amber-500/10 border border-amber-400/35 p-3.5 mb-5 text-xs text-white/80 leading-relaxed';
+                    banner.innerHTML = '<strong class="text-amber-300">Almost ready:</strong> Your Netlify voice server is live, but <code class="bg-white/10 px-1 py-0.5 rounded text-lavender">GEMINI_API_KEY</code> is not set in Netlify Environment Variables yet. Set it once in Netlify so visitors never need API keys.';
+                } else if (builtInServerState === 'unavailable' && !customKey && !customProxy) {
+                    banner.className = 'rounded-xl bg-amber-500/10 border border-amber-400/35 p-3.5 mb-5 text-xs text-white/80 leading-relaxed';
+                    banner.innerHTML = '<strong class="text-amber-300">Static hosting detected:</strong> Deploy this repo to <strong class="text-white">Netlify</strong> (free) so <code class="bg-white/10 px-1 py-0.5 rounded text-lavender">/api/generate-voice</code> runs automatically for all users with zero API keys — or enter a custom Netlify endpoint / personal key below.';
+                } else {
+                    banner.className = 'rounded-xl bg-emerald-500/10 border border-emerald-400/30 p-3.5 mb-5 text-xs text-white/80 leading-relaxed';
+                    banner.innerHTML = '<strong class="text-emerald-300">Built-in Studio Engine active:</strong> Visitors can generate voices right away with <strong class="text-white">Gemini 3.8 Flash TTS</strong> — no API key setup needed. The fields below are strictly optional.';
+                }
             }
+        }
+
+        async function checkBuiltInServer() {
+            try {
+                const res = await fetch(DEFAULT_VOICE_ENDPOINT, { method: 'GET' });
+                if (!res.ok) {
+                    builtInServerState = 'unavailable';
+                } else {
+                    const data = await res.json();
+                    builtInServerState = data && data.configured ? 'ready' : 'unconfigured';
+                }
+            } catch {
+                builtInServerState = 'unavailable';
+            }
+            updateApiStatusUI();
         }
 
         function toggleApiModal(show) {
@@ -760,6 +823,7 @@
             if (show) {
                 document.getElementById('modal-api-key').value = getStoredApiKey();
                 document.getElementById('modal-proxy-url').value = getStoredProxyUrl();
+                updateApiStatusUI();
                 modal.classList.remove('hidden');
             } else {
                 modal.classList.add('hidden');
@@ -780,13 +844,13 @@
             if (proxy) localStorage.setItem(STORAGE_PROXY_KEY, proxy); else localStorage.removeItem(STORAGE_PROXY_KEY);
             updateApiStatusUI();
             toggleApiModal(false);
-            showToast((key || proxy) ? 'Gemini API configured successfully in local browser!' : 'API credentials cleared.', (key || proxy) ? 'success' : 'info');
+            showToast((key || proxy) ? 'Custom engine settings saved!' : 'Switched back to built-in Gemini 3.8 Flash TTS server.', 'success');
         }
 
         function clearApiKey() {
             localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(STORAGE_PROXY_KEY); sessionStorage.removeItem(STORAGE_KEY);
             document.getElementById('modal-api-key').value = ''; document.getElementById('modal-proxy-url').value = '';
-            updateApiStatusUI(); toggleApiModal(false); showToast('API credentials removed.', 'info');
+            updateApiStatusUI(); toggleApiModal(false); showToast('Using built-in Gemini 3.8 Flash TTS server (no API key required).', 'info');
         }
 
         const VOICE_ROSTER = [
@@ -903,6 +967,29 @@
         function updateCharCount() { document.getElementById('char-count').textContent = document.getElementById('voice-script').value.length; }
         function updatePacingLabel(val) { document.getElementById('pacing-val').textContent = ({ '1': 'Slow & Deliberate', '2': 'Normal', '3': 'Fast & Dynamic' })[val] || 'Normal'; }
 
+        function updateEngineLabel() {
+            const model = document.getElementById('model-select')?.value || 'gemini-3.8-flash-tts';
+            const el = document.getElementById('active-engine-label');
+            if (el) el.textContent = model === 'gemini-3.8-flash-lite-tts' ? 'Gemini 3.8 Flash-Lite TTS' : 'Gemini 3.8 Flash TTS';
+        }
+
+        function insertVocalTag(tag) {
+            const textarea = document.getElementById('voice-script');
+            if (!textarea) return;
+            const start = textarea.selectionStart ?? textarea.value.length;
+            const end = textarea.selectionEnd ?? textarea.value.length;
+            const before = textarea.value.slice(0, start);
+            const after = textarea.value.slice(end);
+            const padLeft = before.length > 0 && !/\s$/.test(before) ? ' ' : '';
+            const padRight = after.length > 0 && !/^\s/.test(after) ? ' ' : ' ';
+            const insertion = `${padLeft}${tag}${padRight}`;
+            textarea.value = before + insertion + after;
+            const nextPos = start + insertion.length;
+            textarea.focus();
+            textarea.setSelectionRange(nextPos, nextPos);
+            updateCharCount();
+        }
+
         function base64ToArrayBuffer(base64) {
             const bin = window.atob(base64), len = bin.length, bytes = new Uint8Array(len);
             for (let i = 0; i < len; i++) bytes[i] = bin.charCodeAt(i);
@@ -920,15 +1007,30 @@
             return new Blob([buffer], { type: 'audio/wav' });
         }
 
+        function audioBufferToWavBlob(arrayBuffer, mimeType = '') {
+            const bytes = new Uint8Array(arrayBuffer);
+            // Gemini 3.8 unary responses already include a complete RIFF/WAV header
+            if (bytes.length >= 4 && bytes[0] === 0x52 && bytes[1] === 0x49 && bytes[2] === 0x46 && bytes[3] === 0x46) {
+                return new Blob([arrayBuffer], { type: 'audio/wav' });
+            }
+            const rateMatch = mimeType ? mimeType.match(/rate=(\d+)/) : null;
+            return pcmToWav(new Int16Array(arrayBuffer), rateMatch ? parseInt(rateMatch[1], 10) : 24000);
+        }
+
         async function fetchWithBackoff(url, options, maxRetries = 2) {
             let delay = 1000;
             for (let attempt = 0; attempt <= maxRetries; attempt++) {
                 const response = await fetch(url, options);
                 if (response.ok) return response;
                 let errDetails = '';
-                try { errDetails = (await response.json())?.error?.message || ''; } catch (e) {}
-                if (response.status === 400 || response.status === 401 || response.status === 403 || attempt === maxRetries) {
-                    throw new Error(errDetails || `API Error (${response.status})`);
+                try {
+                    const errJson = await response.json();
+                    errDetails = (typeof errJson?.error === 'string' ? errJson.error : errJson?.error?.message) || '';
+                } catch (e) {}
+                if ([400, 401, 403, 404, 503].includes(response.status) || attempt === maxRetries) {
+                    const err = new Error(errDetails || `Voice Engine Error (${response.status})`);
+                    err.status = response.status;
+                    throw err;
                 }
                 await new Promise(r => setTimeout(r, delay));
                 delay *= 2;
@@ -940,79 +1042,140 @@
             const pacingVal = document.getElementById('pacing-slider').value;
             const expr = parseInt(document.getElementById('expressiveness-slider').value, 10);
             const styleMap = {
-                viral_shorts: 'in a fast-paced, punchy viral YouTube Shorts and Instagram Reels hook style with high energy and sharp vocal cadence',
-                natural: 'in a clear, studio-quality natural tone',
-                cinematic: 'in a dramatic, deep, cinematic movie-trailer voice',
-                energetic: 'in an upbeat, exciting, high-energy commercial voice',
-                whisper: 'in a soft, intimate, breathy whisper',
-                documentary: 'in a calm, authoritative documentary narrator tone',
-                cyberpunk: 'in a sleek, crisp, confident futuristic voice'
+                viral_shorts: 'fast-paced, punchy viral Reels and Shorts hook energy',
+                natural: 'clear, studio-quality natural delivery',
+                cinematic: 'dramatic, deep, cinematic movie-trailer narration',
+                energetic: 'upbeat, exciting, high-energy commercial delivery',
+                whisper: 'soft, intimate, breathy whisper',
+                documentary: 'calm, authoritative documentary narration',
+                cyberpunk: 'sleek, crisp, confident futuristic delivery'
             };
-            const pacingMap = { '1': 'at a slow, deliberate pace', '2': 'at a natural conversational pace', '3': 'at a brisk, dynamic pace' };
-            const exprNote = expr >= 75 ? 'with rich emotional expressiveness' : expr <= 35 ? 'with calm, restrained neutrality' : 'with balanced expression';
+            const pacingMap = { '1': 'slow deliberate pace', '2': 'natural conversational pace', '3': 'brisk dynamic pace' };
+            const exprNote = expr >= 75 ? 'rich emotional expressiveness' : expr <= 35 ? 'calm restrained tone' : 'balanced expression';
             return `${styleMap[style] || styleMap.natural}, ${pacingMap[pacingVal] || pacingMap['2']}, ${exprNote}`;
+        }
+
+        function parseDialogueTurnsFor38(script, style) {
+            const lines = script.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+            const turns = [];
+            let currentSpeaker = 'Alex';
+            for (const line of lines) {
+                const match = line.match(/^(Alex|Maya)\s*:\s*(.+)$/i);
+                if (match) {
+                    currentSpeaker = match[1].charAt(0).toUpperCase() + match[1].slice(1).toLowerCase();
+                    if (match[2].trim()) turns.push({ speaker: currentSpeaker, text: match[2].trim() });
+                } else if (turns.length > 0) {
+                    turns[turns.length - 1].text += ' ' + line;
+                } else {
+                    turns.push({ speaker: currentSpeaker, text: line });
+                }
+            }
+            if (!turns.length) turns.push({ speaker: 'Alex', text: script.trim() });
+            return turns.map(t => ({
+                text: t.text,
+                speechMetadata: style ? { speaker: t.speaker, style } : { speaker: t.speaker }
+            }));
         }
 
         async function generateVoiceover() {
             const script = document.getElementById('voice-script').value.trim();
             if (!script) { showToast('Please enter a script before generating audio.', 'error'); return; }
-            const apiKey = getStoredApiKey(), proxyUrl = getStoredProxyUrl();
-            if (!apiKey && !proxyUrl) { showToast('Please connect your Gemini API key to start generating.', 'info'); toggleApiModal(true); return; }
+
+            const apiKey = getStoredApiKey();
+            const customProxyUrl = getStoredProxyUrl();
+            const model = document.getElementById('model-select')?.value || 'gemini-3.8-flash-tts';
 
             const btn = document.getElementById('generate-btn'), btnText = document.getElementById('gen-btn-text');
             const icon = document.getElementById('gen-icon'), spinner = document.getElementById('gen-spinner');
-            btn.disabled = true; icon.classList.add('hidden'); spinner.classList.remove('hidden'); btnText.textContent = 'Synthesizing...';
+            btn.disabled = true; icon.classList.add('hidden'); spinner.classList.remove('hidden'); btnText.textContent = 'Synthesizing 3.8...';
 
             try {
                 const deliveryGuide = buildDeliveryInstruction();
-                let payload, voiceLabel = '';
-                if (currentStudioMode === 'single') {
-                    voiceLabel = document.getElementById('voice-select').value;
-                    payload = {
-                        contents: [{ parts: [{ text: `Say ${deliveryGuide}: ${script}` }] }],
-                        generationConfig: { responseModalities: ["AUDIO"], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voiceLabel } } } }
-                    };
-                } else {
-                    const spk1 = document.getElementById('speaker1-select').value, spk2 = document.getElementById('speaker2-select').value;
-                    voiceLabel = `${spk1} & ${spk2}`;
-                    payload = {
-                        contents: [{ parts: [{ text: `TTS the following conversation between Alex and Maya ${deliveryGuide}:\n${script}` }] }],
-                        generationConfig: {
-                            responseModalities: ["AUDIO"],
-                            speechConfig: {
-                                multiSpeakerVoiceConfig: {
-                                    speakerVoiceConfigs: [
-                                        { speaker: "Alex", voiceConfig: { prebuiltVoiceConfig: { voiceName: spk1 } } },
-                                        { speaker: "Maya", voiceConfig: { prebuiltVoiceConfig: { voiceName: spk2 } } }
-                                    ]
-                                }
+                const voice = document.getElementById('voice-select').value;
+                const spk1 = document.getElementById('speaker1-select').value;
+                const spk2 = document.getElementById('speaker2-select').value;
+                const voiceLabel = currentStudioMode === 'single' ? voice : `${spk1} & ${spk2}`;
+
+                let wavBlob;
+
+                if (apiKey) {
+                    // Optional personal key override -> direct Gemini 3.8 Flash TTS GenerateContent call
+                    let parts, speechConfig;
+                    if (currentStudioMode === 'single') {
+                        parts = [{ text: script, speechMetadata: { style: deliveryGuide } }];
+                        speechConfig = { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } };
+                    } else {
+                        parts = parseDialogueTurnsFor38(script, deliveryGuide);
+                        speechConfig = {
+                            multiSpeakerVoiceConfig: {
+                                speakerVoiceConfigs: [
+                                    { speaker: 'Alex', voiceConfig: { prebuiltVoiceConfig: { voiceName: spk1 } } },
+                                    { speaker: 'Maya', voiceConfig: { prebuiltVoiceConfig: { voiceName: spk2 } } }
+                                ]
                             }
-                        }
+                        };
+                    }
+                    const directPayload = {
+                        contents: [{ role: 'user', parts }],
+                        generationConfig: { responseModalities: ['AUDIO'], speechConfig }
                     };
+                    const directUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+                    const response = await fetchWithBackoff(directUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
+                        body: JSON.stringify(directPayload)
+                    });
+                    const result = await response.json();
+                    const part = result?.candidates?.[0]?.content?.parts?.[0];
+                    const audioData = part?.inlineData?.data, mimeType = part?.inlineData?.mimeType;
+                    if (!audioData) throw new Error('No audio data returned from Gemini 3.8 Flash TTS.');
+                    wavBlob = audioBufferToWavBlob(base64ToArrayBuffer(audioData), mimeType);
+                } else {
+                    // Default keyless mode -> built-in Netlify serverless proxy (/api/generate-voice)
+                    const endpoint = customProxyUrl || DEFAULT_VOICE_ENDPOINT;
+                    const response = await fetchWithBackoff(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            text: script,
+                            voice,
+                            style: deliveryGuide,
+                            mode: currentStudioMode,
+                            speaker1: spk1,
+                            speaker2: spk2,
+                            model
+                        })
+                    });
+
+                    const contentType = response.headers.get('content-type') || '';
+                    if (contentType.includes('audio/')) {
+                        wavBlob = await response.blob();
+                    } else {
+                        const result = await response.json();
+                        const part = result?.candidates?.[0]?.content?.parts?.[0];
+                        const audioData = part?.inlineData?.data, mimeType = part?.inlineData?.mimeType;
+                        if (!audioData) throw new Error('No audio data returned from voice server.');
+                        wavBlob = audioBufferToWavBlob(base64ToArrayBuffer(audioData), mimeType);
+                    }
                 }
 
-                const targetUrl = proxyUrl || `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
-                const response = await fetchWithBackoff(targetUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                const result = await response.json();
-                const part = result?.candidates?.[0]?.content?.parts?.[0];
-                const audioData = part?.inlineData?.data, mimeType = part?.inlineData?.mimeType;
-                if (!audioData) throw new Error("No audio data returned from synthesis engine.");
-
-                const rateMatch = mimeType ? mimeType.match(/rate=(\d+)/) : null;
-                const wavBlob = pcmToWav(new Int16Array(base64ToArrayBuffer(audioData)), rateMatch ? parseInt(rateMatch[1], 10) : 24000);
                 const takeObj = {
                     id: Date.now(), url: URL.createObjectURL(wavBlob), voice: voiceLabel,
                     snippet: script.slice(0, 48) + (script.length > 48 ? '...' : ''),
                     time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                    fileName: `ZEDCraft_${voiceLabel.replace(/\s+/g, '_')}_${Date.now()}.wav`
+                    fileName: `ZEDCraft_3.8_${voiceLabel.replace(/\s+/g, '_')}_${Date.now()}.wav`
                 };
                 sessionHistory.unshift(takeObj);
                 renderHistory();
                 loadAudioIntoPlayer(takeObj, true);
-                showToast(`Voiceover synthesized with ${voiceLabel}!`, 'success');
+                showToast(`Synthesized with ${voiceLabel} (Gemini 3.8 Flash TTS)!`, 'success');
             } catch (err) {
                 console.error('Synthesis error:', err);
-                showToast(err.message || 'Synthesis failed. Please verify your API key and script.', 'error');
+                if (err.status === 404 && !apiKey && !customProxyUrl) {
+                    showToast('Built-in voice server not found on this host. Deploy on Netlify (free) or open Engine Settings.', 'error');
+                } else {
+                    showToast(err.message || 'Synthesis failed. Please try again in a moment.', 'error');
+                }
             } finally {
                 btn.disabled = false; icon.classList.remove('hidden'); spinner.classList.add('hidden'); btnText.textContent = 'Generate Voiceover';
             }
@@ -1120,7 +1283,7 @@
         }
 
         window.onload = function () {
-            initHero3DScene(); initHeroBgArtJiggle(); renderVoiceCards(); updateCharCount(); updateApiStatusUI();
+            initHero3DScene(); initHeroBgArtJiggle(); renderVoiceCards(); updateCharCount(); updateEngineLabel(); updateApiStatusUI(); checkBuiltInServer();
             document.getElementById('voice-script').addEventListener('input', updateCharCount);
         };
     </script>
