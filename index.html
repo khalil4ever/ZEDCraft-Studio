@@ -50,13 +50,28 @@
         .eq-bar { transform-origin: bottom; animation: eqPulse 1.1s ease-in-out infinite; }
         @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .animate-spin-slow { animation: spinSlow 24s linear infinite; }
-        @keyframes artJiggle {
-            0%, 100% { transform: translate3d(0, 0, 0) scale(1, 1) rotate(0deg); }
-            25% { transform: translate3d(3px, -5px, 0) scale(1.012, 0.992) rotate(0.45deg); }
-            50% { transform: translate3d(-2px, 3px, 0) scale(0.992, 1.01) rotate(-0.35deg); }
-            75% { transform: translate3d(2px, -2px, 0) scale(1.008, 0.995) rotate(0.25deg); }
+        @keyframes artSlowJiggle {
+            0%, 100% { transform: translate3d(0px, 0px, 0) scale(1, 1) rotate(0deg); }
+            20% { transform: translate3d(4px, -7px, 0) scale(1.016, 0.99) rotate(0.55deg); }
+            45% { transform: translate3d(-3px, 4px, 0) scale(0.992, 1.014) rotate(-0.4deg); }
+            70% { transform: translate3d(3px, -5px, 0) scale(1.012, 0.994) rotate(0.35deg); }
+            88% { transform: translate3d(-2px, 2px, 0) scale(0.996, 1.006) rotate(-0.2deg); }
         }
-        .bg-art-jiggle { animation: artJiggle 3.8s ease-in-out infinite; transform-origin: center center; }
+        .bg-art-jiggle {
+            animation: artSlowJiggle 7.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+            transform-origin: 50% 62%;
+            will-change: transform;
+        }
+        .anime-bg-img {
+            filter: brightness(0.86) contrast(1.14) saturate(1.18) drop-shadow(0 0 42px rgba(225, 29, 72, 0.25));
+            -webkit-mask-image: radial-gradient(ellipse 68% 76% at 56% 48%, #000 38%, rgba(0,0,0,0.65) 62%, transparent 86%);
+            mask-image: radial-gradient(ellipse 68% 76% at 56% 48%, #000 38%, rgba(0,0,0,0.65) 62%, transparent 86%);
+        }
+        @keyframes auraBreath {
+            0%, 100% { opacity: 0.42; transform: scale(1); }
+            50% { opacity: 0.68; transform: scale(1.06); }
+        }
+        .anime-aura { animation: auraBreath 7.5s ease-in-out infinite; }
         input[type="range"].cyber-slider { -webkit-appearance: none; appearance: none; height: 4px; border-radius: 999px; background: rgba(255, 255, 255, 0.14); outline: none; }
         input[type="range"].cyber-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: linear-gradient(135deg, #ffffff, #c09eff); box-shadow: 0 0 12px rgba(192, 158, 255, 0.8); cursor: pointer; }
         .modal-backdrop { background: rgba(5, 5, 7, 0.85); backdrop-filter: blur(12px); }
@@ -115,8 +130,8 @@
     <!-- HERO SECTION -->
     <section id="home" class="relative min-h-screen flex flex-col justify-between overflow-hidden border-b border-white/10">
         <div class="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-            <div class="absolute -top-24 right-[12%] w-[540px] h-[540px] rounded-full bg-purple-600/30 blur-[150px]"></div>
-            <div class="absolute bottom-[-12%] right-[18%] w-[480px] h-[480px] rounded-full bg-fuchsia-700/20 blur-[150px]"></div>
+            <div class="anime-aura absolute -top-20 right-[10%] w-[560px] h-[560px] rounded-full bg-rose-600/25 blur-[150px]"></div>
+            <div class="anime-aura absolute bottom-[-12%] right-[16%] w-[500px] h-[500px] rounded-full bg-purple-600/25 blur-[150px]" style="animation-delay: -3.5s;"></div>
             <div class="absolute top-[30%] left-[-8%] w-[360px] h-[360px] rounded-full bg-violet-900/20 blur-[130px]"></div>
         </div>
         <svg class="pointer-events-none absolute inset-0 w-full h-full z-0 opacity-30" viewBox="0 0 1440 900" fill="none" preserveAspectRatio="xMidYMid slice">
@@ -127,10 +142,11 @@
             <line x1="420" y1="0" x2="420" y2="900" stroke="rgba(255,255,255,0.05)" stroke-width="0.7"/>
             <line x1="1080" y1="0" x2="1080" y2="900" stroke="rgba(255,255,255,0.05)" stroke-width="0.7"/>
         </svg>
-        <div id="hero-bg-art-wrapper" class="pointer-events-none absolute inset-y-0 right-0 w-full md:w-[62%] lg:w-[54%] z-[5] flex items-center justify-center overflow-hidden">
-            <img id="hero-bg-art-img" src="1000702062_3.jpg" alt="ZEDCraft Studio Background Art" class="bg-art-jiggle h-[92%] max-w-none object-contain opacity-45 select-none" style="-webkit-mask-image: radial-gradient(ellipse 68% 72% at 55% 48%, #000 35%, transparent 82%); mask-image: radial-gradient(ellipse 68% 72% at 55% 48%, #000 35%, transparent 82%);" />
+        <div id="hero-bg-art-wrapper" class="pointer-events-none absolute inset-y-0 right-0 w-full md:w-[64%] lg:w-[54%] z-[5] flex items-center justify-end pr-0 md:pr-6 overflow-hidden">
+            <img id="hero-bg-art-img" src="assets/hero-anime-bg.jpg" alt="ZEDCraft Studio 2D Anime Visual" class="bg-art-jiggle anime-bg-img h-[104%] max-w-none object-contain opacity-75 select-none" />
         </div>
         <div class="pointer-events-none absolute inset-0 z-[6] bg-gradient-to-r from-[#050507] via-[#050507]/75 to-transparent"></div>
+        <div class="pointer-events-none absolute inset-x-0 bottom-0 h-44 z-[6] bg-gradient-to-t from-[#050507] via-[#050507]/70 to-transparent"></div>
         <canvas id="hero-3d-canvas" class="pointer-events-none absolute inset-0 w-full h-full z-10"></canvas>
 
         <header class="relative z-20 w-full max-w-[1440px] mx-auto px-5 sm:px-10 pt-6 sm:pt-8 flex items-center justify-between gap-4">
@@ -372,10 +388,10 @@
                                 <button type="button" onclick="insertVocalTag('<long pause>')" class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-white/5 hover:bg-purple-500/25 border border-white/10 hover:border-lavender/50 text-lavender/90 transition-all">&lt;long pause&gt;</button>
                                 <button type="button" onclick="insertVocalTag('<cough>')" class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-white/5 hover:bg-purple-500/25 border border-white/10 hover:border-lavender/50 text-lavender/90 transition-all">&lt;cough&gt;</button>
                             </div>
-                            <div class="flex items-center justify-between mt-2 text-[11px] font-tech text-white/45">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mt-2 text-[11px] font-tech text-white/45">
                                 <span id="dialogue-hint" class="hidden text-lavender">Use "Alex:" and "Maya:" prefixes — Gemini 3.8 automatically routes each turn.</span>
-                                <span id="single-hint">Tip: Click any vocal tag above or use ellipses (...) for natural acting pauses.</span>
-                                <span><span id="char-count">167</span> / 5000</span>
+                                <span id="single-hint">Tip: Click any vocal tag above or press <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-white/70 text-[10px]">Ctrl+Enter</kbd> to generate.</span>
+                                <span class="flex items-center gap-2"><span id="est-duration" class="text-lavender/80">~11s</span><span class="text-white/20">•</span><span><span id="char-count">167</span> / 5000</span></span>
                             </div>
                         </div>
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-2 border-t border-white/10">
@@ -454,7 +470,7 @@
                         </div>
                         <div id="single-voice-controls" class="flex flex-col gap-4">
                             <div>
-                                <label class="block text-[11px] font-tech tracking-[0.15em] uppercase text-white/60 mb-2">Active Voice Persona</label>
+                                <label class="block text-[11px] font-tech tracking-[0.15em] uppercase text-white/60 mb-2">Active Voice Persona (16 Studio Voices)</label>
                                 <select id="voice-select" class="w-full bg-black/70 border border-white/15 focus:border-lavender rounded-xl px-4 py-3 text-sm text-white outline-none">
                                     <option value="Zephyr" selected>Zephyr — Bright, Crisp & Futuristic</option>
                                     <option value="Puck">Puck — Upbeat, Charismatic Creator Host</option>
@@ -464,6 +480,14 @@
                                     <option value="Charon">Charon — Deep, Resonant Documentary</option>
                                     <option value="Leda">Leda — Youthful, Expressive & Dynamic</option>
                                     <option value="Orus">Orus — Bold, Clear & Direct</option>
+                                    <option value="Callirrhoe">Callirrhoe — Smooth, Easygoing Storyteller</option>
+                                    <option value="Enceladus">Enceladus — Breathy, Intimate & Emotional</option>
+                                    <option value="Algenib">Algenib — Gravelly, Intense Character</option>
+                                    <option value="Vindemiatrix">Vindemiatrix — Gentle, Calm & Soothing</option>
+                                    <option value="Sulafat">Sulafat — Warm, Engaging Podcast Host</option>
+                                    <option value="Schedar">Schedar — Even, Grounded News Anchor</option>
+                                    <option value="Laomedeia">Laomedeia — Lively, Animated & Expressive</option>
+                                    <option value="Umbriel">Umbriel — Cool, Relaxed Late-Night Radio</option>
                                 </select>
                             </div>
                         </div>
@@ -475,6 +499,10 @@
                                     <option value="Kore">Kore — Firm & Poised</option>
                                     <option value="Charon">Charon — Resonant</option>
                                     <option value="Orus">Orus — Direct</option>
+                                    <option value="Algenib">Algenib — Gravelly & Intense</option>
+                                    <option value="Schedar">Schedar — Grounded Anchor</option>
+                                    <option value="Umbriel">Umbriel — Cool Late-Night</option>
+                                    <option value="Puck">Puck — Upbeat & Lively</option>
                                 </select>
                             </div>
                             <div>
@@ -482,8 +510,12 @@
                                 <select id="speaker2-select" class="w-full bg-black/70 border border-white/15 focus:border-lavender rounded-xl px-3.5 py-2.5 text-sm text-white outline-none">
                                     <option value="Aoede" selected>Aoede — Breezy & Natural</option>
                                     <option value="Zephyr">Zephyr — Bright & Crisp</option>
-                                    <option value="Puck">Puck — Upbeat & Lively</option>
                                     <option value="Leda">Leda — Youthful & Warm</option>
+                                    <option value="Callirrhoe">Callirrhoe — Smooth Storyteller</option>
+                                    <option value="Sulafat">Sulafat — Engaging Host</option>
+                                    <option value="Laomedeia">Laomedeia — Lively & Animated</option>
+                                    <option value="Vindemiatrix">Vindemiatrix — Gentle & Calm</option>
+                                    <option value="Enceladus">Enceladus — Breathy & Intimate</option>
                                 </select>
                             </div>
                         </div>
@@ -498,6 +530,13 @@
                                 <option value="documentary">Documentary — Calm, Authoritative</option>
                                 <option value="cyberpunk">Futuristic AI — Crisp, Sleek & Confident</option>
                             </select>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1.5">
+                                <label for="custom-style-input" class="text-[11px] font-tech tracking-[0.15em] uppercase text-white/60">Custom Acting Direction (3.8)</label>
+                                <span class="text-[10px] font-tech text-lavender/75 uppercase">Optional</span>
+                            </div>
+                            <input id="custom-style-input" type="text" maxlength="140" placeholder="e.g. whispered urgently, playful anime host, warm African accent..." class="w-full bg-black/70 border border-white/15 focus:border-lavender rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-white/30 outline-none transition-colors" />
                         </div>
                         <div class="space-y-4 pt-2 border-t border-white/10">
                             <div>
@@ -520,7 +559,10 @@
                     <div class="cyber-glass-strong rounded-2xl p-5 sm:p-6 flex-1 flex flex-col">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-[11px] font-tech tracking-[0.2em] uppercase text-lavender">SESSION HISTORY</span>
-                            <span id="history-count" class="text-[10px] font-tech text-white/45 uppercase">0 Takes</span>
+                            <div class="flex items-center gap-2.5">
+                                <span id="history-count" class="text-[10px] font-tech text-white/45 uppercase">0 Takes</span>
+                                <button id="clear-history-btn" onclick="clearHistory()" class="hidden text-[10px] font-tech uppercase tracking-wider text-rose-300/80 hover:text-rose-200 transition-colors">Clear</button>
+                            </div>
                         </div>
                         <div id="history-list" class="flex flex-col gap-2.5 max-h-56 overflow-y-auto pr-1">
                             <div class="text-xs text-white/35 py-6 text-center border border-dashed border-white/10 rounded-xl">
@@ -536,12 +578,18 @@
     <!-- SIGNATURE VOICE LIBRARY -->
     <section id="voices" class="relative py-20 sm:py-28 px-5 sm:px-10 border-b border-white/10">
         <div class="max-w-[1320px] mx-auto">
-            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
                 <div>
-                    <div class="text-[11px] font-tech tracking-[0.24em] uppercase text-lavender mb-2">✦ CURATED NEURAL ROSTER</div>
+                    <div class="text-[11px] font-tech tracking-[0.24em] uppercase text-lavender mb-2">✦ 16 CURATED GEMINI 3.8 VOICES</div>
                     <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight">SIGNATURE <span class="lavender-text">VOICES</span></h2>
                 </div>
-                <p class="text-xs sm:text-sm text-white/55 max-w-md">Select any Gemini prebuilt voice persona to load it directly into ZEDCraft Studio.</p>
+                <div id="voice-filter-bar" class="flex flex-wrap items-center gap-2">
+                    <button onclick="filterVoiceCards('all')" data-filter="all" class="voice-filter-btn px-3.5 py-2 rounded-xl text-[11px] font-tech tracking-[0.14em] uppercase bg-white text-obsidian font-semibold transition-all">All (16)</button>
+                    <button onclick="filterVoiceCards('creator')" data-filter="creator" class="voice-filter-btn px-3.5 py-2 rounded-xl text-[11px] font-tech tracking-[0.14em] uppercase cyber-glass text-white/75 hover:text-white transition-all">Creator &amp; Shorts</button>
+                    <button onclick="filterVoiceCards('cinematic')" data-filter="cinematic" class="voice-filter-btn px-3.5 py-2 rounded-xl text-[11px] font-tech tracking-[0.14em] uppercase cyber-glass text-white/75 hover:text-white transition-all">Cinematic &amp; Deep</button>
+                    <button onclick="filterVoiceCards('story')" data-filter="story" class="voice-filter-btn px-3.5 py-2 rounded-xl text-[11px] font-tech tracking-[0.14em] uppercase cyber-glass text-white/75 hover:text-white transition-all">Warm &amp; Story</button>
+                    <button onclick="filterVoiceCards('studio')" data-filter="studio" class="voice-filter-btn px-3.5 py-2 rounded-xl text-[11px] font-tech tracking-[0.14em] uppercase cyber-glass text-white/75 hover:text-white transition-all">Studio &amp; News</button>
+                </div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" id="voice-cards-grid"></div>
         </div>
@@ -736,13 +784,13 @@
 
             let targetX = 0, targetY = 0, currentX = 0, currentY = 0, velX = 0, velY = 0;
             window.addEventListener('mousemove', (e) => {
-                targetX = (e.clientX / window.innerWidth - 0.5) * 18;
-                targetY = (e.clientY / window.innerHeight - 0.5) * 14;
+                targetX = (e.clientX / window.innerWidth - 0.5) * 14;
+                targetY = (e.clientY / window.innerHeight - 0.5) * 10;
             });
             function animateSpringJiggle() {
                 requestAnimationFrame(animateSpringJiggle);
-                velX = (velX + (targetX - currentX) * 0.08) * 0.82;
-                velY = (velY + (targetY - currentY) * 0.08) * 0.82;
+                velX = (velX + (targetX - currentX) * 0.035) * 0.88;
+                velY = (velY + (targetY - currentY) * 0.035) * 0.88;
                 currentX += velX; currentY += velY;
                 wrapper.style.transform = `translate3d(${currentX.toFixed(2)}px, ${currentY.toFixed(2)}px, 0)`;
             }
@@ -854,20 +902,28 @@
         }
 
         const VOICE_ROSTER = [
-            { id: 'Zephyr', name: 'Zephyr', tag: 'Futuristic', desc: 'Bright, crisp, and high-tech tone ideal for product trailers & modern voiceovers.', style: 'cyberpunk', pacing: '2', expressiveness: 75 },
-            { id: 'Puck', name: 'Puck', tag: 'Creator Host', desc: 'Upbeat, charismatic voice tailored for high-engagement YouTube and podcast audio.', style: 'energetic', pacing: '3', expressiveness: 88 },
-            { id: 'Fenrir', name: 'Fenrir', tag: 'Cinematic', desc: 'Deep, powerful resonance built for dramatic movie trailers and epic storytelling.', style: 'cinematic', pacing: '1', expressiveness: 85 },
-            { id: 'Kore', name: 'Kore', tag: 'Studio Narrator', desc: 'Firm, poised delivery ideal for documentaries, commercial spots, and explainers.', style: 'natural', pacing: '2', expressiveness: 65 },
-            { id: 'Aoede', name: 'Aoede', tag: 'Commercial', desc: 'Breezy, sophisticated warmth for luxury branding and modern advertisements.', style: 'natural', pacing: '2', expressiveness: 75 },
-            { id: 'Charon', name: 'Charon', tag: 'Documentary', desc: 'Resonant, authoritative baritone for journalism, history, and deep analysis.', style: 'documentary', pacing: '2', expressiveness: 60 },
-            { id: 'Leda', name: 'Leda', tag: 'Youthful', desc: 'Expressive, energetic personality built for relatable storytelling and social clips.', style: 'viral_shorts', pacing: '3', expressiveness: 90 },
-            { id: 'Orus', name: 'Orus', tag: 'Executive', desc: 'Direct, confident, and professional voice for keynote narrations and tech debuts.', style: 'natural', pacing: '2', expressiveness: 70 }
+            { id: 'Zephyr', name: 'Zephyr', tag: 'Futuristic', category: 'creator', desc: 'Bright, crisp, and high-tech tone ideal for product trailers & modern voiceovers.', style: 'cyberpunk', pacing: '2', expressiveness: 75, sample: 'Welcome to ZEDCraft Studio. Crisp neural synthesis, ready on your command.' },
+            { id: 'Puck', name: 'Puck', tag: 'Creator Host', category: 'creator', desc: 'Upbeat, charismatic voice tailored for high-engagement YouTube and podcast audio.', style: 'energetic', pacing: '3', expressiveness: 88, sample: 'What is up creators! Ready to turn your next script into viral studio audio?' },
+            { id: 'Fenrir', name: 'Fenrir', tag: 'Cinematic', category: 'cinematic', desc: 'Deep, powerful resonance built for dramatic movie trailers and epic storytelling.', style: 'cinematic', pacing: '1', expressiveness: 85, sample: 'In a world of noise, one voice commands the screen.' },
+            { id: 'Kore', name: 'Kore', tag: 'Studio Narrator', category: 'studio', desc: 'Firm, poised delivery ideal for documentaries, commercial spots, and explainers.', style: 'natural', pacing: '2', expressiveness: 65, sample: 'Clear, studio-grade narration crafted for modern brands and explainers.' },
+            { id: 'Aoede', name: 'Aoede', tag: 'Commercial', category: 'story', desc: 'Breezy, sophisticated warmth for luxury branding and modern advertisements.', style: 'natural', pacing: '2', expressiveness: 75, sample: 'Elegance is not just seen. It is heard in every breath.' },
+            { id: 'Charon', name: 'Charon', tag: 'Documentary', category: 'cinematic', desc: 'Resonant, authoritative baritone for journalism, history, and deep analysis.', style: 'documentary', pacing: '2', expressiveness: 60, sample: 'Every great story begins with a single voice that holds the room.' },
+            { id: 'Leda', name: 'Leda', tag: 'Youthful', category: 'creator', desc: 'Expressive, energetic personality built for relatable storytelling and social clips.', style: 'viral_shorts', pacing: '3', expressiveness: 90, sample: 'Wait until you hear how realistic this sounds <laugh> zero studio mic needed!' },
+            { id: 'Orus', name: 'Orus', tag: 'Executive', category: 'studio', desc: 'Direct, confident, and professional voice for keynote narrations and tech debuts.', style: 'natural', pacing: '2', expressiveness: 70, sample: 'Introducing the next generation of instant neural audio.' },
+            { id: 'Callirrhoe', name: 'Callirrhoe', tag: 'Storyteller', category: 'story', desc: 'Smooth, easygoing warmth built for audiobooks, lifestyle vlogs, and narration.', style: 'natural', pacing: '2', expressiveness: 75, sample: 'Settle in, take a breath, and let the story unfold naturally.' },
+            { id: 'Enceladus', name: 'Enceladus', tag: 'Intimate', category: 'story', desc: 'Breathy, emotional texture for dramatic monologues, ASMR, and midnight tales.', style: 'whisper', pacing: '1', expressiveness: 85, sample: 'Listen closely... <short pause> every whisper carries a secret.' },
+            { id: 'Algenib', name: 'Algenib', tag: 'Character', category: 'cinematic', desc: 'Gravelly, intense edge ideal for game characters, anime villains, and trailers.', style: 'cinematic', pacing: '1', expressiveness: 90, sample: 'You thought the signal was lost. You had no idea what was coming.' },
+            { id: 'Vindemiatrix', name: 'Vindemiatrix', tag: 'Soothing', category: 'story', desc: 'Gentle, calm cadence for meditation, wellness guides, and gentle storytelling.', style: 'documentary', pacing: '1', expressiveness: 60, sample: 'Breathe in slowly... and let the calm carry you forward.' },
+            { id: 'Sulafat', name: 'Sulafat', tag: 'Podcast Host', category: 'creator', desc: 'Warm, engaging conversational voice made for interviews and creator channels.', style: 'energetic', pacing: '2', expressiveness: 80, sample: 'Welcome back to the show! Today we have something huge to unpack.' },
+            { id: 'Schedar', name: 'Schedar', tag: 'News Anchor', category: 'studio', desc: 'Even, grounded clarity tailored for broadcasts, tutorials, and e-learning.', style: 'documentary', pacing: '2', expressiveness: 55, sample: 'Breaking down complex ideas into clear, effortless audio.' },
+            { id: 'Laomedeia', name: 'Laomedeia', tag: 'Animated', category: 'creator', desc: 'Lively, upbeat sparkle ideal for anime narration, gaming, and punchy Reels.', style: 'viral_shorts', pacing: '3', expressiveness: 92, sample: 'No way! <gasp> That voiceover took literally five seconds to make!' },
+            { id: 'Umbriel', name: 'Umbriel', tag: 'Late-Night', category: 'cinematic', desc: 'Cool, relaxed smoothness crafted for lo-fi radio, chill essays, and cinema.', style: 'documentary', pacing: '1', expressiveness: 70, sample: 'Late night frequencies. Smooth audio engineered beyond reality.' }
         ];
 
         const VOICE_TYPE_PRESETS = {
             viral_shorts: { label: 'Viral Shorts & Reels', voice: 'Puck', style: 'viral_shorts', pacing: '3', expressiveness: 95, scriptKey: 'viral_shorts' },
             cinematic: { label: 'Cinema Trailer', voice: 'Fenrir', style: 'cinematic', pacing: '1', expressiveness: 85, scriptKey: 'trailer' },
-            podcast: { label: 'Creator Host', voice: 'Puck', style: 'energetic', pacing: '2', expressiveness: 85, scriptKey: 'podcast' },
+            podcast: { label: 'Creator Host', voice: 'Sulafat', style: 'energetic', pacing: '2', expressiveness: 85, scriptKey: 'podcast' },
             luxury: { label: 'Luxury Ad', voice: 'Aoede', style: 'natural', pacing: '2', expressiveness: 70, scriptKey: 'luxury' },
             documentary: { label: 'Documentary', voice: 'Charon', style: 'documentary', pacing: '2', expressiveness: 60, scriptKey: 'trailer' },
             cyberpunk: { label: 'Cyber AI', voice: 'Zephyr', style: 'cyberpunk', pacing: '2', expressiveness: 75, scriptKey: 'cyberpunk' }
@@ -875,32 +931,65 @@
 
         const SAMPLE_SCRIPTS = {
             viral_shorts: "Stop scrolling! Did you know 90% of viral videos win or lose their audience in the first 1.5 seconds? Here's the exact vocal hack top creators use to lock in viewers until the very last frame!",
-            trailer: "In a world where silence reigned... one signal changed everything. Welcome to ZEDCraft Studio. Experience voices sculpted beyond reality.",
+            trailer: "In a world where silence reigned... <short pause> one signal changed everything. Welcome to ZEDCraft Studio. Experience voices sculpted beyond reality.",
             luxury: "Precision isn't just seen. It's heard. Introducing the new Obsidian Series — engineered for those who live ahead of time.",
             podcast: "What's up creators! You're tuned into Future Frequency, where we break down the tools shaping tomorrow's digital culture. Let's dive right in!",
             cyberpunk: "Neural link established. Acoustic matrix calibrated to ninety-nine point nine percent fidelity. ZEDCraft Studio is online and ready for your command.",
-            dialogue: "Alex: Wait, did you actually record that narration in an expensive acoustic studio?\nMaya: Not even close! I typed the script into ZEDCraft Studio ten seconds ago and synthesized it live.\nAlex: That is unreal. The emotion sounds completely human."
+            dialogue: "Alex: Wait, did you actually record that narration in an expensive acoustic studio?\nMaya: Not even close! <laugh> I typed the script into ZEDCraft Studio ten seconds ago and synthesized it live.\nAlex: That is unreal. The emotion sounds completely human."
         };
 
         let currentStudioMode = 'single', currentAudioUrl = null, currentFileName = 'zedcraft_voiceover.wav', sessionHistory = [];
+        let activeVoiceFilter = 'all';
         let audioCtx = null, analyser = null, sourceNode = null, visualizerFrameId = null;
+
+        function filterVoiceCards(category) {
+            activeVoiceFilter = category;
+            document.querySelectorAll('.voice-filter-btn').forEach(btn => {
+                const isActive = btn.dataset.filter === category;
+                btn.className = isActive
+                    ? 'voice-filter-btn px-3.5 py-2 rounded-xl text-[11px] font-tech tracking-[0.14em] uppercase bg-white text-obsidian font-semibold transition-all'
+                    : 'voice-filter-btn px-3.5 py-2 rounded-xl text-[11px] font-tech tracking-[0.14em] uppercase cyber-glass text-white/75 hover:text-white transition-all';
+            });
+            renderVoiceCards();
+        }
 
         function renderVoiceCards() {
             const grid = document.getElementById('voice-cards-grid');
             if (!grid) return;
-            grid.innerHTML = VOICE_ROSTER.map(v => `
-                <div class="cyber-glass rounded-2xl p-5 flex flex-col justify-between gap-4 hover:border-lavender/60 transition-all group">
+            const list = activeVoiceFilter === 'all' ? VOICE_ROSTER : VOICE_ROSTER.filter(v => v.category === activeVoiceFilter);
+            grid.innerHTML = list.map(v => `
+                <div class="cyber-glass rounded-2xl p-5 flex flex-col justify-between gap-4 hover:border-lavender/60 hover:-translate-y-0.5 transition-all group">
                     <div>
                         <div class="flex items-center justify-between mb-3">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500/30 to-white/10 border border-white/15 flex items-center justify-center font-display text-sm font-bold text-lavender">${v.name.slice(0, 2).toUpperCase()}</div>
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500/25 via-purple-500/30 to-white/10 border border-white/15 flex items-center justify-center font-display text-sm font-bold text-lavender">${v.name.slice(0, 2).toUpperCase()}</div>
                             <span class="px-2.5 py-1 rounded-full text-[10px] font-tech tracking-wider uppercase bg-white/5 border border-white/10 text-white/70">${v.tag}</span>
                         </div>
                         <h3 class="font-display text-base font-bold text-white mb-1">${v.name}</h3>
                         <p class="text-xs text-white/55 leading-relaxed">${v.desc}</p>
                     </div>
-                    <button onclick="selectVoiceFromLibrary('${v.id}', '${v.style}')" class="w-full py-2.5 rounded-xl border border-white/15 group-hover:border-lavender/70 group-hover:bg-purple-500/15 text-[11px] font-tech tracking-[0.16em] uppercase text-white/85 transition-all flex items-center justify-center gap-2"><span>Load in Studio</span><span>↗</span></button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="previewVoiceFromLibrary('${v.id}', this)" title="Quick Voice Preview" class="px-3 py-2.5 rounded-xl border border-white/15 hover:border-lavender/70 hover:bg-white/10 text-[11px] font-tech tracking-wider uppercase text-white/80 hover:text-white transition-all flex items-center justify-center gap-1.5 shrink-0">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <span>Test</span>
+                        </button>
+                        <button onclick="selectVoiceFromLibrary('${v.id}', '${v.style}')" class="flex-1 py-2.5 rounded-xl border border-white/15 group-hover:border-lavender/70 group-hover:bg-purple-500/15 text-[11px] font-tech tracking-[0.14em] uppercase text-white/85 transition-all flex items-center justify-center gap-1.5"><span>Use Voice</span><span>↗</span></button>
+                    </div>
                 </div>
             `).join('');
+        }
+
+        async function previewVoiceFromLibrary(voiceId, btnEl) {
+            const voiceObj = VOICE_ROSTER.find(v => v.id === voiceId);
+            if (!voiceObj) return;
+            selectVoiceFromLibrary(voiceObj.id, voiceObj.style);
+            document.getElementById('voice-script').value = voiceObj.sample;
+            updateCharCount();
+            if (btnEl) btnEl.disabled = true;
+            try {
+                await generateVoiceover();
+            } finally {
+                if (btnEl) btnEl.disabled = false;
+            }
         }
 
         function selectVoiceFromLibrary(voiceId, style) {
@@ -964,7 +1053,18 @@
         }
 
         function clearScript() { const t = document.getElementById('voice-script'); t.value = ''; updateCharCount(); t.focus(); }
-        function updateCharCount() { document.getElementById('char-count').textContent = document.getElementById('voice-script').value.length; }
+        function updateCharCount() {
+            const text = document.getElementById('voice-script').value;
+            document.getElementById('char-count').textContent = text.length;
+            const words = text.replace(/<[^>]+>/g, '').trim().split(/\s+/).filter(Boolean).length;
+            const estSec = Math.max(0, Math.round(words / 2.5));
+            const estEl = document.getElementById('est-duration');
+            if (estEl) {
+                if (estSec === 0) estEl.textContent = '0s';
+                else if (estSec < 60) estEl.textContent = `~${estSec}s`;
+                else estEl.textContent = `~${Math.floor(estSec / 60)}m ${estSec % 60}s`;
+            }
+        }
         function updatePacingLabel(val) { document.getElementById('pacing-val').textContent = ({ '1': 'Slow & Deliberate', '2': 'Normal', '3': 'Fast & Dynamic' })[val] || 'Normal'; }
 
         function updateEngineLabel() {
@@ -1038,6 +1138,7 @@
         }
 
         function buildDeliveryInstruction() {
+            const customDir = (document.getElementById('custom-style-input')?.value || '').trim();
             const style = document.getElementById('style-select').value;
             const pacingVal = document.getElementById('pacing-slider').value;
             const expr = parseInt(document.getElementById('expressiveness-slider').value, 10);
@@ -1052,7 +1153,8 @@
             };
             const pacingMap = { '1': 'slow deliberate pace', '2': 'natural conversational pace', '3': 'brisk dynamic pace' };
             const exprNote = expr >= 75 ? 'rich emotional expressiveness' : expr <= 35 ? 'calm restrained tone' : 'balanced expression';
-            return `${styleMap[style] || styleMap.natural}, ${pacingMap[pacingVal] || pacingMap['2']}, ${exprNote}`;
+            const base = `${styleMap[style] || styleMap.natural}, ${pacingMap[pacingVal] || pacingMap['2']}, ${exprNote}`;
+            return customDir ? `${customDir}; ${base}` : base;
         }
 
         function parseDialogueTurnsFor38(script, style) {
@@ -1254,22 +1356,45 @@
 
         function renderHistory() {
             const list = document.getElementById('history-list');
+            const clearBtn = document.getElementById('clear-history-btn');
             document.getElementById('history-count').textContent = `${sessionHistory.length} ${sessionHistory.length === 1 ? 'Take' : 'Takes'}`;
-            if (!sessionHistory.length) return;
+            if (clearBtn) clearBtn.classList.toggle('hidden', sessionHistory.length === 0);
+            if (!sessionHistory.length) {
+                list.innerHTML = `<div class="text-xs text-white/35 py-6 text-center border border-dashed border-white/10 rounded-xl">Generated voiceovers will appear here for instant replay &amp; download.</div>`;
+                return;
+            }
             list.innerHTML = sessionHistory.map((item, idx) => `
-                <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-lavender/50 transition-all">
+                <div class="flex items-center justify-between gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-lavender/50 transition-all">
                     <div class="min-w-0 flex-1">
                         <div class="flex items-center gap-2 text-[11px] font-tech text-lavender"><span class="font-semibold">${item.voice}</span><span class="text-white/30">•</span><span class="text-white/45">${item.time}</span></div>
                         <p class="text-xs text-white/75 truncate mt-0.5">${item.snippet}</p>
                     </div>
-                    <button onclick="replayHistoryTake(${idx})" title="Play Take" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white hover:text-obsidian flex items-center justify-center shrink-0 transition-all">
-                        <svg class="w-3.5 h-3.5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    </button>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button onclick="downloadHistoryTake(${idx})" title="Download WAV" class="w-8 h-8 rounded-full bg-white/5 hover:bg-lavender/20 hover:text-lavender flex items-center justify-center transition-all text-white/70">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>
+                        </button>
+                        <button onclick="replayHistoryTake(${idx})" title="Play Take" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white hover:text-obsidian flex items-center justify-center transition-all">
+                            <svg class="w-3.5 h-3.5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </button>
+                    </div>
                 </div>
             `).join('');
         }
 
         function replayHistoryTake(idx) { if (sessionHistory[idx]) loadAudioIntoPlayer(sessionHistory[idx], true); }
+        function downloadHistoryTake(idx) {
+            const item = sessionHistory[idx];
+            if (!item) return;
+            const a = document.createElement('a'); a.href = item.url; a.download = item.fileName;
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            showToast(`Downloading ${item.voice} WAV...`, 'info');
+        }
+        function clearHistory() {
+            sessionHistory.forEach(item => { try { URL.revokeObjectURL(item.url); } catch {} });
+            sessionHistory = [];
+            renderHistory();
+            showToast('Session history cleared.', 'info');
+        }
 
         function showToast(message, type = 'info') {
             const container = document.getElementById('toast-container'), toast = document.createElement('div');
@@ -1284,7 +1409,14 @@
 
         window.onload = function () {
             initHero3DScene(); initHeroBgArtJiggle(); renderVoiceCards(); updateCharCount(); updateEngineLabel(); updateApiStatusUI(); checkBuiltInServer();
-            document.getElementById('voice-script').addEventListener('input', updateCharCount);
+            const scriptEl = document.getElementById('voice-script');
+            scriptEl.addEventListener('input', updateCharCount);
+            scriptEl.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    e.preventDefault();
+                    generateVoiceover();
+                }
+            });
         };
     </script>
 </body>
