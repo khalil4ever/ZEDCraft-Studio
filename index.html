@@ -792,7 +792,9 @@
             animateSpringJiggle();
         }
 
-        const DEFAULT_VOICE_ENDPOINT = '/api/generate-voice';
+        const DEFAULT_VOICE_ENDPOINT = window.location.hostname.endsWith('.netlify.app')
+            ? '/api/generate-voice'
+            : 'https://zedcraftstudio.netlify.app/api/generate-voice';
         const STORAGE_KEY = 'zedcraft_gemini_api_key';
         const STORAGE_PROXY_KEY = 'zedcraft_proxy_url';
         let builtInServerState = 'checking'; // 'ready' | 'unconfigured' | 'unavailable' | 'checking'
